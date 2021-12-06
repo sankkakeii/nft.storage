@@ -28,5 +28,5 @@ if (!s3) {
  */
 export function getContext(event, params) {
   const sentry = getSentry(event)
-  return { params, sentry, db, s3 }
+  return { params, sentry, db, backup: s3 }
 }
