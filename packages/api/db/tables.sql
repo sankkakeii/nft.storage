@@ -134,3 +134,14 @@ CREATE TABLE IF NOT EXISTS upload
 CREATE INDEX IF NOT EXISTS upload_content_cid_idx ON upload (content_cid);
 CREATE INDEX IF NOT EXISTS upload_source_cid_idx ON upload (source_cid);
 CREATE INDEX IF NOT EXISTS upload_updated_at_idx ON upload (updated_at);
+
+-- URLs of backups of user uploads
+CREATE TABLE IF NOT EXISTS backup
+(
+    id          BIGSERIAL PRIMARY KEY,
+    upload_id   BIGINT NOT NULL REFERENCES public.upload (id),
+    url         TEXT NOT NULL,
+    inserted_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS backup_upload_id_idx ON upload (source_cid);
