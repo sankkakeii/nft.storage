@@ -9,6 +9,8 @@ docs
 packages/niftysave/gen
 *.sql
 *.sh
+*.svg
+*.png
 CHANGELOG.md
 .next
 .supabase
@@ -19,3 +21,4 @@ CHANGELOG.md
 .devcontainer
 **/yarn.lock*
 *.toml
+packages/client/src/lib/interface.ts

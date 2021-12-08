@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS pin
 );
 
 CREATE INDEX IF NOT EXISTS pin_updated_at_idx ON pin (updated_at);
+CREATE INDEX IF NOT EXISTS pin_composite_pinned_at_idx ON pin (content_cid, updated_at) WHERE status = 'Pinned';
 
 -- An upload created by a user.
 CREATE TABLE IF NOT EXISTS upload
@@ -130,15 +131,6 @@ CREATE TABLE IF NOT EXISTS upload
     UNIQUE (user_id, source_cid)
 );
 
+CREATE INDEX IF NOT EXISTS upload_content_cid_idx ON upload (content_cid);
 CREATE INDEX IF NOT EXISTS upload_source_cid_idx ON upload (source_cid);
 CREATE INDEX IF NOT EXISTS upload_updated_at_idx ON upload (updated_at);
-
--- Temporary table to record events from the live site between KV sync start
--- and the migration window.
-CREATE TABLE IF NOT EXISTS migration_event
-(
-    id          BIGSERIAL PRIMARY KEY,
-    name        TEXT NOT NULL,
-    data        jsonb,
-    inserted_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);

@@ -2,7 +2,7 @@
 
 import sade from 'sade'
 import Cloudflare from './utils/cloudflare.js'
-import LocalEnv from './utils/localenv.js'
+import got from 'got'
 import { itFind as find } from './utils/common.js'
 
 const cli = sade('nft-cli')
@@ -42,46 +42,47 @@ cli
   .option('--type', 'Record type', 'CNAME')
   .option('--ttl', 'Record TTL', 1)
   .option('--proxied', 'Record should be proxied ?', true)
-  .action(async (
-    /** @type {import('./types').DeployWebsiteOptions} */ opts
-  ) => {
-    try {
-      const cf = new Cloudflare({ email: opts.email, key: opts.key })
-      const deploy = await find(
-        cf.deploymentsPaginate({
-          accountId: opts.account,
-          projectName: opts.project,
-          pagination: { per_page: 10 },
-        }),
-        (/** @type {any} */ i) => {
-          const lastRelease = i.deployment_trigger.metadata.commit_message.startsWith(
-            'chore: release'
-          )
-          return i.environment === 'production' && !lastRelease
-        }
-      )
-      if (
-        deploy.latest_stage.status === 'success' &&
-        deploy.latest_stage.name === 'deploy'
-      ) {
-        await cf.upsertDns(opts.zone, {
-          content: deploy.url.replace('https://', ''),
-          name: opts.name,
-          ttl: opts.ttl,
-          type: opts.type,
-          proxied: opts.proxied,
-        })
-        console.log(
-          `${opts.name} now points to ${deploy.url.replace('https://', '')}`
+  .action(
+    async (/** @type {import('./types').DeployWebsiteOptions} */ opts) => {
+      try {
+        const cf = new Cloudflare({ email: opts.email, key: opts.key })
+        const deploy = await find(
+          cf.deploymentsPaginate({
+            accountId: opts.account,
+            projectName: opts.project,
+            pagination: { per_page: 10 },
+          }),
+          (/** @type {any} */ i) => {
+            const lastRelease =
+              i.deployment_trigger.metadata.commit_message.startsWith(
+                'chore: release'
+              )
+            return i.environment === 'production' && !lastRelease
+          }
         )
-      } else {
-        throw new Error(`Latest Cloudflare production deployment failed`)
+        if (
+          deploy.latest_stage.status === 'success' &&
+          deploy.latest_stage.name === 'deploy'
+        ) {
+          await cf.upsertDns(opts.zone, {
+            content: deploy.url.replace('https://', ''),
+            name: opts.name,
+            ttl: opts.ttl,
+            type: opts.type,
+            proxied: opts.proxied,
+          })
+          console.log(
+            `${opts.name} now points to ${deploy.url.replace('https://', '')}`
+          )
+        } else {
+          throw new Error(`Latest Cloudflare production deployment failed`)
+        }
+      } catch (err) {
+        console.error(err)
+        process.exit(1)
       }
-    } catch (err) {
-      console.error(err)
-      process.exit(1)
     }
-  })
+  )
 
 cli
   .command(
@@ -90,6 +91,23 @@ cli
   )
   .action(async () => {
     await LocalEnv.lint()
+  })
+
+cli
+  .command('heartbeat', 'Ping opsgenie heartbeat')
+  .option('--token', 'Opsgenie Token')
+  .option('--name', 'Heartbeat Name')
+  .action(async (opts) => {
+    try {
+      await got(`https://api.opsgenie.com/v2/heartbeats/${opts.name}/ping`, {
+        headers: {
+          Authorization: `GenieKey ${opts.token}`,
+        },
+      })
+    } catch (err) {
+      console.error(err)
+      process.exit(1)
+    }
   })
 
 cli.parse(process.argv)
