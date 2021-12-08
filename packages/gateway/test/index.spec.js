@@ -15,6 +15,7 @@ test.beforeEach((t) => {
     // This will override the option in wrangler.toml.
     buildCommand: undefined,
     wranglerConfigEnv: 'test',
+    modules: true,
   })
 
   t.context = {
