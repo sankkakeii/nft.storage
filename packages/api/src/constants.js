@@ -63,6 +63,7 @@ export const cluster = {
 if (!DATABASE_URL) {
   throw new Error('DATABASE_URL must be set')
 }
+
 export const database = {
   url: DATABASE_URL,
 }
