@@ -1,6 +1,6 @@
 import { config } from 'dotenv'
 
-config()
+config({ debug: true })
 
 const {
   MAGIC_SECRET_KEY,
@@ -16,6 +16,18 @@ const {
   ENV,
 } = process.env
 
+if (!SALT) {
+  throw new Error('SALT is not defined')
+}
+
+if (!DATABASE_TOKEN) {
+  throw new Error('DATABASE_TOKEN is not defined')
+}
+
+if (!LOGTAIL_TOKEN) {
+  throw new Error('LOGTAIL_TOKEN is not defined')
+}
+
 export const secrets = {
   salt: SALT,
   magic: MAGIC_SECRET_KEY,
@@ -29,6 +41,7 @@ const CLUSTER1 = 'https://nft.storage.ipfscluster.io/api/'
 const CLUSTER2 = 'https://nft2.storage.ipfscluster.io/api/'
 let clusterUrl
 
+console.log('ENVIRONMENT IS', process.env)
 switch (CLUSTER_SERVICE) {
   case 'IpfsCluster':
     clusterUrl = CLUSTER1
