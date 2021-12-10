@@ -1,9 +1,11 @@
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:16
 
 # install psql client for poking at the db
-RUN apt-get update && apt-get install -y postgresql-client
+RUN apt-get update && apt-get install -y \
+  postgresql-client \
+;
 
-ENV DEV_USERNAME=
+# ENV DEV_USERNAME=
 
 COPY .devcontainer/post-attach.sh /bin/
 
