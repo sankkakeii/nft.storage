@@ -1,4 +1,4 @@
-export class JSONResponse extends Response {
+export class JSONResponse /*extends Response*/ {
   /**
    *
    * @param {unknown} body
@@ -10,6 +10,6 @@ export class JSONResponse extends Response {
         'content-type': 'application/json;charset=UTF-8',
       },
     }
-    super(JSON.stringify(body), { ...init, ...headers })
+    // super(JSON.stringify(body), { ...init, ...headers })
   }
 }

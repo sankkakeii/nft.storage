@@ -1,8 +1,14 @@
 import Toucan from 'toucan-js'
 import { DBClient } from './db-client.js'
-import { secrets, database, isDebug } from '../constants.js'
+import {
+  secrets,
+  database,
+  isDebug,
+  environment,
+  version,
+} from '../constants.js'
 import { Logging } from './logs.js'
-import pkg from '../../package.json'
+// import pkg from '../../package.json'
 
 const db = new DBClient(database.url, secrets.database)
 
@@ -11,12 +17,12 @@ const sentryOptions = {
   allowedHeaders: ['user-agent', 'x-client'],
   allowedSearchParams: /(.*)/,
   debug: false,
-  environment: ENV,
+  environment: environment,
   rewriteFrames: {
     root: '/',
   },
-  release: VERSION,
-  pkg,
+  release: version,
+  pkg: {},
 }
 
 /**

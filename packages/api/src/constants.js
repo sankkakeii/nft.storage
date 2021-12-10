@@ -1,4 +1,20 @@
-// let MAGIC_SECRET_KEY, SALT, PINATA_JWT, SENTRY_DSN, DATABASE_TOKEN, CLUSTER_SERVICE, LOGTAIL_TOKEN, MAILCHIMP_API_KEY
+import { config } from 'dotenv'
+
+config()
+
+const {
+  MAGIC_SECRET_KEY,
+  SALT,
+  SENTRY_DSN,
+  DATABASE_TOKEN,
+  CLUSTER_SERVICE,
+  LOGTAIL_TOKEN,
+  MAILCHIMP_API_KEY,
+  CLUSTER_API_URL,
+  DATABASE_URL,
+  DEBUG,
+  ENV,
+} = process.env
 
 export const secrets = {
   salt: SALT,
@@ -25,6 +41,9 @@ switch (CLUSTER_SERVICE) {
     break
 }
 
+if (!clusterUrl) {
+  throw new Error('CLUSTER_API_URL or CLUSTER_SERVICE must be set')
+}
 export const cluster = {
   apiUrl: clusterUrl,
   basicAuthToken:
@@ -43,5 +62,8 @@ export const cluster = {
 export const database = {
   url: DATABASE_URL,
 }
+
+export const environment = ENV
+export const version = '0.0.1'
 
 export const isDebug = DEBUG === 'true'
