@@ -44,6 +44,7 @@ switch (CLUSTER_SERVICE) {
 if (!clusterUrl) {
   throw new Error('CLUSTER_API_URL or CLUSTER_SERVICE must be set')
 }
+
 export const cluster = {
   apiUrl: clusterUrl,
   basicAuthToken:
@@ -59,6 +60,9 @@ export const cluster = {
   localAddThreshold: 0,
 }
 
+if (!DATABASE_URL) {
+  throw new Error('DATABASE_URL must be set')
+}
 export const database = {
   url: DATABASE_URL,
 }
