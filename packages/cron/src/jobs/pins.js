@@ -160,11 +160,11 @@ async function updatePinStatuses(config) {
 
       /** @type {Pin['status']} */
       let status = 'PinError'
-      if (pinInfos.some((i) => i.status === 'pinned')) {
+      if (pinInfos.some(i => i.status === 'pinned')) {
         status = 'Pinned'
-      } else if (pinInfos.some((i) => i.status === 'pinning')) {
+      } else if (pinInfos.some(i => i.status === 'pinning')) {
         status = 'Pinning'
-      } else if (pinInfos.some((i) => i.status === 'pin_queued')) {
+      } else if (pinInfos.some(i => i.status === 'pin_queued')) {
         status = 'PinQueued'
       }
 

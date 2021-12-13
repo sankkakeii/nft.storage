@@ -35,6 +35,7 @@ export const secrets = {
   database: DATABASE_TOKEN,
   mailchimp: MAILCHIMP_API_KEY,
   logtail: LOGTAIL_TOKEN,
+  metaplexAuth: METAPLEX_AUTH_TOKEN,
 }
 
 const CLUSTER1 = 'https://nft.storage.ipfscluster.io/api/'

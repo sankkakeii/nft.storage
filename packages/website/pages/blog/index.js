@@ -27,7 +27,7 @@ export async function getStaticProps() {
 
   const posts = files
     ? files
-        .filter((filename) => !filename.startsWith('.'))
+        .filter(filename => !filename.startsWith('.'))
         .map((fn, index) => {
           const content = fs.readFileSync(`posts/${fn}`).toString()
           const info = matter(content)
@@ -72,7 +72,7 @@ const Paginated = ({ items, pageNumber, setPageNumber }) => {
    * items hook
    * @param {import('../../components/types').PostMeta[]} items
    */
-  const useItems = (items) => {
+  const useItems = items => {
     const [currentItems, setCurrentItems] = useState(items)
 
     useEffect(() => {
@@ -101,7 +101,7 @@ const Paginated = ({ items, pageNumber, setPageNumber }) => {
   /**
    * @param {number} newPage
    */
-  const handlePageClick = (newPage) => {
+  const handlePageClick = newPage => {
     router.push({
       pathname: '/blog',
       query:
@@ -119,12 +119,12 @@ const Paginated = ({ items, pageNumber, setPageNumber }) => {
   const PagNavButton = ({ page, children, disabled, isActive }) => {
     return (
       <Button
-        unstyled={true}
         key={`pag-nav-item-${page || children}`}
         onClick={!page || isActive ? undefined : () => handlePageClick(page)}
         disabled={disabled}
+        variant="tag"
         className={clsx(
-          'select-none btn-secondary ttu items-center',
+          'btn-secondary ttu items-center',
           isActive && 'active',
           disabled && 'disabled'
         )}
@@ -135,7 +135,7 @@ const Paginated = ({ items, pageNumber, setPageNumber }) => {
   }
 
   const PaginatedNav = () => {
-    const rangeButtons = paginationRange?.map((item) => (
+    const rangeButtons = paginationRange?.map(item => (
       <PagNavButton
         key={`nav-button-${item}`}
         page={typeof item === 'string' ? undefined : item}
@@ -203,7 +203,7 @@ function TagsContainer({ tags, filters, handleTagClick }) {
   return (
     <div className="button-tags-container pv3 mw9">
       <Tags
-        tags={tags.map((tag) => {
+        tags={tags.map(tag => {
           const normTag = tag.toLowerCase()
           return {
             label: normTag,
@@ -235,8 +235,8 @@ const Blog = ({ posts }) => {
 
     const shouldFilterPosts = filters[0] !== 'all'
     const _posts = shouldFilterPosts
-      ? posts.filter((post) =>
-          post.tags?.some((t) => filters.includes(t.toLowerCase()))
+      ? posts.filter(post =>
+          post.tags?.some(t => filters.includes(t.toLowerCase()))
         )
       : posts
 
@@ -248,13 +248,13 @@ const Blog = ({ posts }) => {
    *
    * @param {string} tag
    */
-  const handleTagClick = (tag) => {
-    setFilters((prev) => {
+  const handleTagClick = tag => {
+    setFilters(prev => {
       if (tag === 'all') return ['all']
       let newTags = prev.includes(tag)
-        ? prev.filter((t) => t.toLowerCase() !== tag)
+        ? prev.filter(t => t.toLowerCase() !== tag)
         : [...prev, tag.toLowerCase()]
-      newTags = newTags.filter((t) => t.toLowerCase() !== 'all')
+      newTags = newTags.filter(t => t.toLowerCase() !== 'all')
       return newTags.length > 0 ? newTags : ['all']
     })
     if (pageNumber !== 0) {
