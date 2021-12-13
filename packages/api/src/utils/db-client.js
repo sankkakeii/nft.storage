@@ -67,7 +67,7 @@ export class DBClient {
     const defaultPins = [
       {
         status: 'PinQueued',
-        service: 'IpfsCluster2',
+        service: 'IpfsCluster3',
       },
       {
         status: 'PinQueued',
@@ -112,17 +112,17 @@ export class DBClient {
   async getUpload(cid, userId) {
     /** @type {PostgrestQueryBuilder<import('./db-client-types').UploadOutput>} */
     const query = this.client.from('upload')
-    const {
-      data: upload,
-      error,
-      status,
-    } = await query
+    const { data: upload, error, status } = await query
       .select(this.uploadQuery)
       .eq('source_cid', cid)
       .eq('user_id', userId)
       .is('deleted_at', null)
-      // @ts-ignore
-      .filter('content.pin.service', 'in', '(IpfsCluster,IpfsCluster2)')
+      .filter(
+        // @ts-ignore
+        'content.pin.service',
+        'in',
+        '(IpfsCluster,IpfsCluster2,IpfsCluster3)'
+      )
       .single()
 
     if (status === 406 || !upload) {
@@ -149,8 +149,12 @@ export class DBClient {
       .select(this.uploadQuery)
       .eq('user_id', userId)
       .is('deleted_at', null)
-      // @ts-ignore
-      .filter('content.pin.service', 'in', '(IpfsCluster,IpfsCluster2)')
+      .filter(
+        // @ts-ignore
+        'content.pin.service',
+        'in',
+        '(IpfsCluster,IpfsCluster2,IpfsCluster3)'
+      )
       .limit(opts.limit || 10)
       .order('inserted_at', { ascending: false })
 
@@ -192,11 +196,11 @@ export class DBClient {
       throw new DBError(error)
     }
 
-    const cids = uploads?.map((u) => u.content_cid)
+    const cids = uploads?.map(u => u.content_cid)
 
     const deals = await this.getDealsForCids(cids)
 
-    return uploads?.map((u) => {
+    return uploads?.map(u => {
       return {
         ...u,
         deals: deals[u.content_cid] || [],
@@ -242,11 +246,7 @@ export class DBClient {
   async getContent(cid) {
     /** @type {PostgrestQueryBuilder<import('./db-client-types').ContentOutput>} */
     const query = this.client.from('content')
-    const {
-      data: content,
-      error,
-      status,
-    } = await query
+    const { data: content, error, status } = await query
       .select(
         `
         cid,
@@ -256,7 +256,7 @@ export class DBClient {
         pins:pin(status, service, inserted_at)`
       )
       // @ts-ignore
-      .filter('pins.service', 'in', '(IpfsCluster,IpfsCluster2)')
+      .filter('pins.service', 'in', '(IpfsCluster,IpfsCluster2,IpfsCluster3)')
       .eq('cid', cid)
       .single()
 
