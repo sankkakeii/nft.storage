@@ -67,6 +67,32 @@ We use `yarn` in this project and commit the `yarn.lock` file.
 In the root folder create a `.env` file with the following:
 
 ```ini
+
+# Wrangler overrides
+DEBUG=true
+
+# API Secrets
+SALT=secret
+MAILCHIMP_API_KEY=secret
+METAPLEX_AUTH_TOKEN=secret
+MAGIC_SECRET_KEY=secret # needs to be real so create a personal magic.link account or use the staging key
+LOGTAIL_TOKEN=secret
+
+## API Sentry
+SENTRY_DSN=https://000000@0000000.ingest.sentry.io/00000
+SENTRY_TOKEN=secret
+SENTRY_UPLOAD=false
+
+## API Postgrest
+DATABASE_URL=http://localhost:3000
+DATABASE_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTYwMzk2ODgzNCwiZXhwIjoyNTUwNjUzNjM0LCJyb2xlIjoic2VydmljZV9yb2xlIn0.necIJaiP7X2T2QjGeV-FhpkizcNTX8HjDDBAxpgQTEI
+
+# Postgres Database
+DATABASE_CONNECTION=postgresql://postgres:postgres@localhost:5432/postgres
+
+# Vars below this line are optional or can have fake values
+# You only need to have real values if you are manually deploying or running cron jobs locally
+
 # Cloudflare
 CF_TOKEN=<token>
 CF_ACCOUNT_ID=<account-id>
@@ -78,12 +104,7 @@ CLUSTER1_BASIC_AUTH_TOKEN=<token>
 CLUSTER2_API_URL = https://nft2.storage.ipfscluster.io/api/
 CLUSTER2_BASIC_AUTH_TOKEN=<token>
 
-# Postgrest API
-DATABASE_URL=http://localhost:3000
-# Create a token, for role "postgres", using secret value PGRST_JWT_SECRET from 'packages/api/db/docker/docker-compose.yml'
-# https://postgrest.org/en/v8.0/tutorials/tut1.html#step-3-sign-a-token
-DATABASE_TOKEN=<token>
-
+# Postgrest
 PROD_DATABASE_URL=https://db.nft.storage
 PROD_DATABASE_TOKEN=<token>
 
@@ -91,20 +112,12 @@ STAGING_DATABASE_URL=https://db-staging.nft.storage
 STAGING_DATABASE_TOKEN=<token>
 
 # Postgres Database
-DATABASE_CONNECTION=postgresql://postgres:postgres@localhost:5432/postgres
-
 PROD_DATABASE_CONNECTION=<connection-string>
 
 STAGING_DATABASE_CONNECTION=<connection-string>
 
 # Pinata
 PINATA_JWT=<token>
-
-# Sentry.io
-SENTRY_DSN=<dsn>
-SENTRY_TOKEN=<token>
-# Note: tokens can be created here https://sentry.io/settings/account/api/auth-tokens/ and need the following scopes `event:admin` `event:read` `member:read` `org:read` `project:read` `project:releases` `team:read`.
-SENTRY_UPLOAD=false # toggle for sentry source/sourcemaps upload (capture will still work)
 
 # dag cargo
 DAG_CARGO_HOST=<ip>
@@ -120,10 +133,8 @@ Production vars should be set in Github Actions secrets.
 
 To run nft.storage locally, start the following processes:
 
-1. Local IPFS Cluster (`docker-compose up` in your cluster home dir).
-1. Localtunnel to expose cluster (`yarn lt` in `/packages/api`).
-1. API server (`yarn dev --env USER` in `/packages/api`).
-1. Web server (`yarn dev` in `/packages/website`).
+1. API server (`yarn dev` in `/packages/api`).
+2. Web server (`yarn dev` in `/packages/website`).
 
 The site should now be available at http://localhost:4000
 

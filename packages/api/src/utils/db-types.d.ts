@@ -12,79 +12,6 @@ export interface paths {
       }
     }
   }
-  '/aggregate': {
-    get: {
-      parameters: {
-        query: {
-          aggregate_cid?: parameters['rowFilter.aggregate.aggregate_cid']
-          piece_cid?: parameters['rowFilter.aggregate.piece_cid']
-          sha256hex?: parameters['rowFilter.aggregate.sha256hex']
-          export_size?: parameters['rowFilter.aggregate.export_size']
-          metadata?: parameters['rowFilter.aggregate.metadata']
-          entry_created?: parameters['rowFilter.aggregate.entry_created']
-          /** Filtering Columns */
-          select?: parameters['select']
-          /** Ordering */
-          order?: parameters['order']
-          /** Limiting and Pagination */
-          offset?: parameters['offset']
-          /** Limiting and Pagination */
-          limit?: parameters['limit']
-        }
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters['range']
-          /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit']
-          /** Preference */
-          Prefer?: parameters['preferCount']
-        }
-      }
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions['aggregate'][]
-        }
-        /** Partial Content */
-        206: unknown
-      }
-    }
-  }
-  '/aggregate_entry': {
-    get: {
-      parameters: {
-        query: {
-          aggregate_cid?: parameters['rowFilter.aggregate_entry.aggregate_cid']
-          cid_v1?: parameters['rowFilter.aggregate_entry.cid_v1']
-          datamodel_selector?: parameters['rowFilter.aggregate_entry.datamodel_selector']
-          /** Filtering Columns */
-          select?: parameters['select']
-          /** Ordering */
-          order?: parameters['order']
-          /** Limiting and Pagination */
-          offset?: parameters['offset']
-          /** Limiting and Pagination */
-          limit?: parameters['limit']
-        }
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters['range']
-          /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit']
-          /** Preference */
-          Prefer?: parameters['preferCount']
-        }
-      }
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions['aggregate_entry'][]
-        }
-        /** Partial Content */
-        206: unknown
-      }
-    }
-  }
   '/auth_key': {
     get: {
       parameters: {
@@ -274,148 +201,6 @@ export interface paths {
         body: {
           /** content */
           content?: definitions['content']
-        }
-        header: {
-          /** Preference */
-          Prefer?: parameters['preferReturn']
-        }
-      }
-      responses: {
-        /** No Content */
-        204: never
-      }
-    }
-  }
-  '/deal': {
-    get: {
-      parameters: {
-        query: {
-          deal_id?: parameters['rowFilter.deal.deal_id']
-          aggregate_cid?: parameters['rowFilter.deal.aggregate_cid']
-          client?: parameters['rowFilter.deal.client']
-          provider?: parameters['rowFilter.deal.provider']
-          status?: parameters['rowFilter.deal.status']
-          start_epoch?: parameters['rowFilter.deal.start_epoch']
-          end_epoch?: parameters['rowFilter.deal.end_epoch']
-          entry_created?: parameters['rowFilter.deal.entry_created']
-          entry_last_updated?: parameters['rowFilter.deal.entry_last_updated']
-          status_meta?: parameters['rowFilter.deal.status_meta']
-          start_time?: parameters['rowFilter.deal.start_time']
-          sector_start_epoch?: parameters['rowFilter.deal.sector_start_epoch']
-          sector_start_time?: parameters['rowFilter.deal.sector_start_time']
-          end_time?: parameters['rowFilter.deal.end_time']
-          /** Filtering Columns */
-          select?: parameters['select']
-          /** Ordering */
-          order?: parameters['order']
-          /** Limiting and Pagination */
-          offset?: parameters['offset']
-          /** Limiting and Pagination */
-          limit?: parameters['limit']
-        }
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters['range']
-          /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit']
-          /** Preference */
-          Prefer?: parameters['preferCount']
-        }
-      }
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions['deal'][]
-        }
-        /** Partial Content */
-        206: unknown
-      }
-    }
-  }
-  '/migration_event': {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters['rowFilter.migration_event.id']
-          name?: parameters['rowFilter.migration_event.name']
-          data?: parameters['rowFilter.migration_event.data']
-          inserted_at?: parameters['rowFilter.migration_event.inserted_at']
-          /** Filtering Columns */
-          select?: parameters['select']
-          /** Ordering */
-          order?: parameters['order']
-          /** Limiting and Pagination */
-          offset?: parameters['offset']
-          /** Limiting and Pagination */
-          limit?: parameters['limit']
-        }
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters['range']
-          /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit']
-          /** Preference */
-          Prefer?: parameters['preferCount']
-        }
-      }
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions['migration_event'][]
-        }
-        /** Partial Content */
-        206: unknown
-      }
-    }
-    post: {
-      parameters: {
-        body: {
-          /** migration_event */
-          migration_event?: definitions['migration_event']
-        }
-        query: {
-          /** Filtering Columns */
-          select?: parameters['select']
-        }
-        header: {
-          /** Preference */
-          Prefer?: parameters['preferReturn']
-        }
-      }
-      responses: {
-        /** Created */
-        201: unknown
-      }
-    }
-    delete: {
-      parameters: {
-        query: {
-          id?: parameters['rowFilter.migration_event.id']
-          name?: parameters['rowFilter.migration_event.name']
-          data?: parameters['rowFilter.migration_event.data']
-          inserted_at?: parameters['rowFilter.migration_event.inserted_at']
-        }
-        header: {
-          /** Preference */
-          Prefer?: parameters['preferReturn']
-        }
-      }
-      responses: {
-        /** No Content */
-        204: never
-      }
-    }
-    patch: {
-      parameters: {
-        query: {
-          id?: parameters['rowFilter.migration_event.id']
-          name?: parameters['rowFilter.migration_event.name']
-          data?: parameters['rowFilter.migration_event.data']
-          inserted_at?: parameters['rowFilter.migration_event.inserted_at']
-        }
-        body: {
-          /** migration_event */
-          migration_event?: definitions['migration_event']
         }
         header: {
           /** Preference */
@@ -770,47 +555,11 @@ export interface paths {
       }
     }
   }
-  '/rpc/postgres_fdw_handler': {
-    post: {
-      parameters: {
-        body: {
-          args: { [key: string]: unknown }
-        }
-        header: {
-          /** Preference */
-          Prefer?: parameters['preferParams']
-        }
-      }
-      responses: {
-        /** OK */
-        200: unknown
-      }
-    }
-  }
   '/rpc/pgrst_watch': {
     post: {
       parameters: {
         body: {
           args: { [key: string]: unknown }
-        }
-        header: {
-          /** Preference */
-          Prefer?: parameters['preferParams']
-        }
-      }
-      responses: {
-        /** OK */
-        200: unknown
-      }
-    }
-  }
-  '/rpc/postgres_fdw_validator': {
-    post: {
-      parameters: {
-        body: {
-          args: {
-            '': string
-          }
         }
         header: {
           /** Preference */
@@ -864,19 +613,6 @@ export interface paths {
 }
 
 export interface definitions {
-  aggregate: {
-    aggregate_cid?: string
-    piece_cid?: string
-    sha256hex?: string
-    export_size?: number
-    metadata?: string
-    entry_created?: string
-  }
-  aggregate_entry: {
-    aggregate_cid?: string
-    cid_v1?: string
-    datamodel_selector?: string
-  }
   auth_key: {
     /**
      * Note:
@@ -903,32 +639,6 @@ export interface definitions {
     dag_size?: number
     inserted_at: string
     updated_at: string
-  }
-  deal: {
-    deal_id?: number
-    aggregate_cid?: string
-    client?: string
-    provider?: string
-    status?: string
-    start_epoch?: number
-    end_epoch?: number
-    entry_created?: string
-    entry_last_updated?: string
-    status_meta?: string
-    start_time?: string
-    sector_start_epoch?: number
-    sector_start_time?: string
-    end_time?: string
-  }
-  migration_event: {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    id: number
-    name: string
-    data?: string
-    inserted_at: string
   }
   pin: {
     /**
@@ -1017,19 +727,6 @@ export interface parameters {
   offset: string
   /** Limiting and Pagination */
   limit: string
-  /** aggregate */
-  'body.aggregate': definitions['aggregate']
-  'rowFilter.aggregate.aggregate_cid': string
-  'rowFilter.aggregate.piece_cid': string
-  'rowFilter.aggregate.sha256hex': string
-  'rowFilter.aggregate.export_size': string
-  'rowFilter.aggregate.metadata': string
-  'rowFilter.aggregate.entry_created': string
-  /** aggregate_entry */
-  'body.aggregate_entry': definitions['aggregate_entry']
-  'rowFilter.aggregate_entry.aggregate_cid': string
-  'rowFilter.aggregate_entry.cid_v1': string
-  'rowFilter.aggregate_entry.datamodel_selector': string
   /** auth_key */
   'body.auth_key': definitions['auth_key']
   'rowFilter.auth_key.id': string
@@ -1045,28 +742,6 @@ export interface parameters {
   'rowFilter.content.dag_size': string
   'rowFilter.content.inserted_at': string
   'rowFilter.content.updated_at': string
-  /** deal */
-  'body.deal': definitions['deal']
-  'rowFilter.deal.deal_id': string
-  'rowFilter.deal.aggregate_cid': string
-  'rowFilter.deal.client': string
-  'rowFilter.deal.provider': string
-  'rowFilter.deal.status': string
-  'rowFilter.deal.start_epoch': string
-  'rowFilter.deal.end_epoch': string
-  'rowFilter.deal.entry_created': string
-  'rowFilter.deal.entry_last_updated': string
-  'rowFilter.deal.status_meta': string
-  'rowFilter.deal.start_time': string
-  'rowFilter.deal.sector_start_epoch': string
-  'rowFilter.deal.sector_start_time': string
-  'rowFilter.deal.end_time': string
-  /** migration_event */
-  'body.migration_event': definitions['migration_event']
-  'rowFilter.migration_event.id': string
-  'rowFilter.migration_event.name': string
-  'rowFilter.migration_event.data': string
-  'rowFilter.migration_event.inserted_at': string
   /** pin */
   'body.pin': definitions['pin']
   'rowFilter.pin.id': string
