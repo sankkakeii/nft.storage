@@ -1,6 +1,7 @@
 const path = require('path')
 const dotenv = require('dotenv')
 const execa = require('execa')
+const delay = require('delay')
 
 dotenv.config({
   path: path.join(__dirname, '../../.env'),
@@ -49,6 +50,8 @@ module.exports = {
 
     await execa(cli, ['db-sql', '--cargo', '--testing', '--reset'])
     console.log('⚡️ SQL schema loaded.')
+
+    await delay(2000)
   },
   afterTests: async (ctx, /** @type{any} */ beforeTests) => {
     console.log('⚡️ Shutting down mock servers.')
