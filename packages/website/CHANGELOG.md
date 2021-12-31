@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.19.0](https://www.github.com/nftstorage/nft.storage/compare/website-v1.18.1...website-v1.19.0) (2021-12-31)
+
+
+### Features
+
+* Add NFTPort logo to website ([#973](https://www.github.com/nftstorage/nft.storage/issues/973)) ([1443d8f](https://www.github.com/nftstorage/nft.storage/commit/1443d8f5e8f5a34a27c83ba5037ef2baafb602af))
+* Remove link to Pinning Service API doc ([9aa13e5](https://www.github.com/nftstorage/nft.storage/commit/9aa13e558fc4b0913612212df52e7d28d11cdfef))
+* Remove link to Pinning Service API doc ([#988](https://www.github.com/nftstorage/nft.storage/issues/988)) ([9aa13e5](https://www.github.com/nftstorage/nft.storage/commit/9aa13e558fc4b0913612212df52e7d28d11cdfef))
+
+
+### Bug Fixes
+
+* install instructions ([#1008](https://www.github.com/nftstorage/nft.storage/issues/1008)) ([a64678e](https://www.github.com/nftstorage/nft.storage/commit/a64678e88df11428a13b7f6152b854a9e50b80a0))
+
+
+### Changes
+
+* Updated faq to address skypack and webpack 4 issue ([#974](https://www.github.com/nftstorage/nft.storage/issues/974)) ([c76a673](https://www.github.com/nftstorage/nft.storage/commit/c76a67313677c0f8b66d1975d79d6a4bc81815f0))
+
 ### [1.18.1](https://www.github.com/nftstorage/nft.storage/compare/website-v1.18.0...website-v1.18.1) (2021-12-15)
 
 
